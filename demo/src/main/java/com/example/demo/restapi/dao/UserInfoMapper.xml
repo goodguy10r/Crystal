@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.restapi.dao.UserInfoMapper">
+
+	<select id="selectAll"  resultType="hashmap">
+		SELECT * 
+		FROM USERINFO
+	</select>
+	
+	<insert id="insertList" parameterType="hashmap">
+		INSERT INTO USERINFO(
+			ID,			NAME,			PHONE,			EMAIL,			PASSWORD
+		)
+		VALUES(
+			#{id},			#{name},			#{phone},			#{email},			#{password}
+		)
+	</insert>
+
+	<update id="updateList" parameterType="hashmap">
+		UPDATE USERINFO
+		SET NAME	 = #{name},
+		    PHONE	 = #{phone},
+		    EMAIL	 = #{email},
+		    PASSWORD = #{password}
+		WHERE ID  = #{id}
+	</update>
+	
+	<delete id="deleteList" parameterType="hashmap">
+		DELETE FROM USERINFO
+		WHERE ID = #{id}
+	</delete>
+</mapper>
