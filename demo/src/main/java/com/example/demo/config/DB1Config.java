@@ -8,11 +8,13 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -20,6 +22,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class DB1Config {
 
+	@Value("${myconfig.db1MapperLocation}")
+	private String db1MapperLocation;
+	
 	@Bean(name="dataSource1")
 	@ConfigurationProperties(prefix="spring.datasource")
 	public DataSource dataSource1() {
@@ -30,7 +35,9 @@ public class DB1Config {
 	public SqlSessionFactory sqlSessionFactory1(@Qualifier("dataSource1") DataSource dataSource1, ApplicationContext applicationContext) throws Exception{
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource1);
+		PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 		sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
+		sqlSessionFactoryBean.setMapperLocations(resolver.getResources(db1MapperLocation));
 		return sqlSessionFactoryBean.getObject();
 	}
 	

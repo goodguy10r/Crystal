@@ -8,6 +8,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.google.gson.Gson;
+
 public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 	
 	Logger logger = org.slf4j.LoggerFactory.getLogger(AuthenticationInterceptor.class);
@@ -16,6 +18,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		logger.info("preHandle Interceptor  ! ");
+		Gson gson = new Gson();
 		return true;
 	}
 	

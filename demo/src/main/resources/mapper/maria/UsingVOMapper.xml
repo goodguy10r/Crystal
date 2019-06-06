@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.restapi.usingvo.dao.UsingVODao">
+
+	<select id="selectAll"  resultType="com.example.demo.restapi.usingvo.vo.UsingVO">
+		SELECT * 
+		FROM USERINFO
+	</select>
+	
+	<select id="selectFromId"  parameterType="String" resultType="com.example.demo.restapi.usingvo.vo.UsingVO">
+		SELECT * 
+		  FROM USERINFO
+		 WHERE ID = #{id}
+ 	</select>
+ 	
+ 	<select id="selectFromId1"  parameterType="map" resultType="com.example.demo.restapi.usingvo.vo.UsingVO">
+		SELECT 
+		   <choose>
+		   		<when test="type != null">
+		   			${type}
+		   		</when>
+		   		<otherwise>
+		   			* 
+		   		</otherwise>
+		   </choose>
+		  FROM USERINFO
+		 WHERE ID = #{id}
+ 	</select>
+	
+	<insert id="insertList" parameterType="com.example.demo.restapi.usingvo.vo.UsingVO">
+		INSERT INTO USERINFO(
+			ID,	NAME,	PHONE,	EMAIL, PASSWORD
+		)
+		VALUES(
+			#{id},	#{name},	#{phone},	#{email},	#{password}
+		)
+	</insert>
+
+	<update id="updateList" parameterType="com.example.demo.restapi.usingvo.vo.UsingVO">
+		UPDATE USERINFO
+		SET NAME	 = #{name},
+		    PHONE	 = #{phone},
+		    EMAIL	 = #{email},
+		    PASSWORD = #{password}
+		WHERE ID  = #{id}
+	</update>
+	
+	<delete id="deleteList" parameterType="com.example.demo.restapi.usingvo.vo.UsingVO">
+		DELETE FROM USERINFO
+		WHERE ID = #{id}
+	</delete>
+</mapper>
